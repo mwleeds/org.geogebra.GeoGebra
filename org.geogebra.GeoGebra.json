@@ -11,7 +11,7 @@
         "--socket=x11",
         "--socket=wayland",
         "--filesystem=home",
-        "--extra-data=GeoGebra-Linux-Portable-5-0-400-0.tar.bz2:2737eeb2ca4e6d9957e899d7bee966485b7db27600e80c32536fafa1eacd99f1:135166422::https://download.geogebra.org/installers/5.0/GeoGebra-Linux-Portable-5-0-400-0.tar.bz2"
+        "--extra-data=GeoGebra-Linux64-Portable-6-0-400-0.zip:5e101799b841ce8ef2db117aa500486c8f1abaef13828d3c9fc5b52ac1259c63:65492617::https://download.geogebra.org/installers/6.0/GeoGebra-Linux64-Portable-6-0-400-0.zip"
     ],
     "modules": [
         {
@@ -34,37 +34,19 @@
                     "type": "script",
                     "dest-filename": "apply_extra",
                     "commands": [
-                        "tar -jxvf GeoGebra-Linux-Portable-5-0-400-0.tar.bz2",
-                        "rm -f GeoGebra-Linux-Portable-5-0-400-0.tar.bz2",
-                        "/app/bin/cleanup-other-arches.sh"
+                        "unzip GeoGebra-Linux64-Portable-6-0-400-0.zip",
+                        "rm -f GeoGebra-Linux64-Portable-6-0-400-0.zip"
                     ]
                 },
                 {
                     "type": "script",
-                    "commands": ["exec /app/extra/GeoGebra-Linux-Portable-5-0-400-0/geogebra-portable \"$@\""],
+                    "commands": ["exec /app/extra/GeoGebra-linux-x64/GeoGebra \"$@\""],
                     "dest-filename": "geogebra.sh"
-                },
-                {
-                    "type": "script",
-                    "dest-filename": "cleanup-other-arches.sh",
-                    "commands": [
-                        "rm -rf /app/extra/GeoGebra-Linux-Portable-5-0-400-0/jre1.8.0_121-i686/"
-                    ],
-                    "only-arches": ["x86_64"]
-                },
-                {
-                    "type": "script",
-                    "dest-filename": "cleanup-other-arches.sh",
-                    "commands": [
-                        "rm -rf /app/extra/GeoGebra-Linux-Portable-5-0-400-0/jre1.8.0_121-x86_64/"
-                    ],
-                    "only-arches": ["i386"]
                 }
             ],
             "build-commands": [
                 "mkdir -p /app/bin",
                 "install -Dm755 apply_extra /app/bin",
-                "install -Dm755 cleanup-other-arches.sh /app/bin",
                 "install -Dm755 geogebra.sh /app/bin/geogebra",
                 "install -Dm644 geogebra.desktop /app/share/applications/org.geogebra.GeoGebra.desktop",
                 "install -Dm644 geogebra.png /app/share/icons/hicolor/256x256/apps/org.geogebra.GeoGebra.png",
